@@ -1,0 +1,5 @@
+# Ignore tmp folders
+**/__pycache__
+
+# Ignore compiled files
+**/*.pyc
