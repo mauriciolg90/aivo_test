@@ -17,11 +17,37 @@ util/
 db_setup.py  
 main.py  
 
-## Create a virtual environment
+## Install principal packages
 
-Creating a virtual environment will isolate the libraries for one project from another and is very useful when you have multiple Python applications running on a single server.
+We need Git tools to clone the project, PIP for install Python packages, a SQL server to make queries later and a virtual environment for Python:
 
-To create a virtual environment, perform the following:
+```
+$ sudo apt install git
+$ sudo apt install python3-pip
+$ sudo apt install mysql-server
+$ sudo apt-get install python3-venv
+```
+
+## Create a MySQL user
+
+A new user account will allow us to bring data from a CSV file:
+
+```
+# Write the root password after run the following:
+$ sudo mysql -u root -p
+
+# In this example, 'mauri' is the new user and '280490mg' is its password:
+mysql> CREATE USER 'mauri'@'localhost' IDENTIFIED BY '280490mg';
+Query OK, 0 rows affected (0.00 sec)
+
+# Finally, we need to give it permissions to create a database later:
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'mauri'@'localhost' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.00 sec)
+```
+
+## Clone the project
+
+To clone the repository to your local machine, perform the following:
 
 ```
 # Create a new folder for your files:
@@ -30,12 +56,58 @@ $ mkdir ~/aivo
 # Make sure you are in the above directory:
 $ cd ~/aivo
 
-# Install and create the virtual environment (on mac/linux):
-$ sudo apt-get install python3-venv
+# Clone the repository:
+$ git clone https://github.com/mauriciolg90/aivo_test.git
+```
+
+## Read the CSV file
+
+A simple way to query the data is to load the CSV into a SQL table:
+
+```
+# Make sure the SQL script is on the below directory (downloaded previously):
+mysql -u mauri -p < ~/aivo/aivo_test/util/script.sql
+```
+
+The previous command requires to insert the password, and if we didn't receive any error messages, then all were ok.
+
+## Configure bash environment
+
+For the application can connect to the database, we need to configure some environment variables:
+
+```
+# Open the bashrc file using any text editor, for example:
+$ nano ~/.bashrc
+
+# Add the following lines according to the SQL parameters configured previously:
+
+export DB_HOST='localhost'
+export DB_PORT='3306'
+export DB_NAME='flask_test'
+export DB_USER='mauri'
+export DB_PASS='280490mg'
+```
+
+NOTE: by default, host and port are 'localhost' and '3306' respectively.
+
+## Create a virtual environment
+
+Creating a virtual environment will isolate the libraries for one project from another and is very useful when you have multiple Python applications running on a single server.
+
+To create a virtual environment, perform the following:
+
+```
+# Make sure you are in the work directory:
+$ cd ~/aivo
+
+# Create the virtual environment (on mac/linux):
 $ python3 -m venv flask_env
 
 # Activate the virtualenv created recently:
 $ source flask_env/bin/activate
+
+# Install flask and other dependencies:
+$ pip3 install -r aivo_test/requirements.txt
 
 # NOTE: when you are done with virtualenv, you can run:
 $ deactivate
