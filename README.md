@@ -16,10 +16,11 @@ util/
 |-> script.sql  
 db_setup.py  
 main.py  
+requirements.txt  
 
 ## Install principal packages
 
-We need Git tools to clone the project, PIP for install Python packages, a SQL server to make queries later and a virtual environment for Python:
+We need Git tools to clone the project, PIP to install Python packages, a SQL server to make queries and a virtual environment for Python:
 
 ```
 $ sudo apt install git
@@ -71,25 +72,6 @@ mysql -u mauri -p < ~/aivo/aivo_test/util/script.sql
 
 The previous command requires to insert the password, and if we didn't receive any error messages, then all were ok.
 
-## Configure bash environment
-
-For the application can connect to the database, we need to configure some environment variables:
-
-```
-# Open the bashrc file using any text editor, for example:
-$ nano ~/.bashrc
-
-# Add the following lines according to the SQL parameters configured previously:
-
-export DB_HOST='localhost'
-export DB_PORT='3306'
-export DB_NAME='flask_test'
-export DB_USER='mauri'
-export DB_PASS='280490mg'
-```
-
-NOTE: by default, host and port are 'localhost' and '3306' respectively.
-
 ## Create a virtual environment
 
 Creating a virtual environment will isolate the libraries for one project from another and is very useful when you have multiple Python applications running on a single server.
@@ -102,8 +84,35 @@ $ cd ~/aivo
 
 # Create the virtual environment (on mac/linux):
 $ python3 -m venv flask_env
+```
 
-# Activate the virtualenv created recently:
+## Configure bash environment
+
+For making your environment variables accessible to the application, you will need to modify your virtualenv activation file:
+
+```
+# Open the file using any text editor, for example:
+$ nano flask_env/bin/activate
+
+# Add the following lines according to the SQL parameters configured previously:
+
+export DB_HOST='localhost'
+export DB_PORT='3306'
+export DB_NAME='flask_test'
+export DB_USER='mauri'
+export DB_PASS='280490mg'
+
+# Save and exit
+```
+
+NOTE: by default, host and port are 'localhost' and '3306' respectively.
+
+## Init the virtual environment
+
+Finally, we can start to use the virtual environment doing:
+
+```
+# Activate the virtualenv created:
 $ source flask_env/bin/activate
 
 # Install flask and other dependencies:
