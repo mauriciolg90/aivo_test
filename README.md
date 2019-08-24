@@ -133,7 +133,7 @@ $ python3 aivo_test/main.py
 Then, you can make queries using a client like Postman or Curl. The easiest way is to write the URL on any browser:
 
 ```
-# Replace the 'index' parameter for an value greater than 0:
+# Replace the 'index' parameter with a value greater than 0:
 http://localhost:5000/countries/sw_lifs_gt/<float:index>
 
 # For example:
