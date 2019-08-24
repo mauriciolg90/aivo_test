@@ -1,6 +1,6 @@
 # API REST for Aivo
 
-This web application is used to filter countries according to indexs provided by the user. It can be extended easily by adding new routes on controllers module at app folder.
+This web application is used to filter countries according to indexs provided by the user. It can be extended easily by adding new routes on the controllers module at app folder.
 
 ## Project hierarchy
 
@@ -82,7 +82,7 @@ To create a virtual environment, perform the following:
 # Make sure you are in the work directory:
 $ cd ~/aivo
 
-# Create the virtual environment (on mac/linux):
+# Create the virtual environment:
 $ python3 -m venv flask_env
 ```
 
@@ -95,7 +95,6 @@ For making your environment variables accessible to the application, you will ne
 $ nano flask_env/bin/activate
 
 # Add the following lines according to the SQL parameters configured previously:
-
 export DB_HOST='localhost'
 export DB_PORT='3306'
 export DB_NAME='flask_test'
@@ -107,7 +106,7 @@ export DB_PASS='280490mg'
 
 NOTE: by default, host and port are 'localhost' and '3306' respectively.
 
-## Init the virtual environment
+## Initializing the virtual environment
 
 Finally, we can start to use the virtual environment doing:
 
@@ -120,4 +119,41 @@ $ pip3 install -r aivo_test/requirements.txt
 
 # NOTE: when you are done with virtualenv, you can run:
 $ deactivate
+```
+
+## How to use the application
+
+Simply, you should run the main module as the following:
+
+```
+# This configure the endpoints and launch the web server, waiting for requests:
+$ python3 aivo_test/main.py
+```
+
+Then, you can make queries using a client like Postman or Curl. The easiest way is to write the URL on any browser:
+
+```
+# Replace the 'index' parameter for an value greater than 0:
+http://localhost:5000/countries/sw_lifs_gt/<float:index>
+
+# For example:
+http://localhost:5000/countries/sw_lifs_gt/5.0
+```
+
+The application returns a JSON containing the found results. If you want to build another queries, you should only add new endpoints and handlers on the controllers module.
+
+## Running unit tests
+
+When the web server is running (i.e. it's up), you have 3 ways to run testcases. On another console and activating the virtualenv:
+
+```
+# Run ALL testcases:
+$ python3 -m pytest -s aivo_test/test/unit/test_countries.py
+
+# Run MARKED testcases (i.e. testcases with labels):
+$ python3 -m pytest -s aivo_test/test/unit/test_countries.py -m status_code
+$ python3 -m pytest -s aivo_test/test/unit/test_countries.py -m countries_len
+
+# Run SPECIFIC testcase:
+$ python3 -m pytest -s aivo_test/test/unit/test_countries.py::test_not_found_request
 ```

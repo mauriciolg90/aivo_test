@@ -3,7 +3,7 @@ from db_setup import Session
 from app.models import Indicators
 from flask import Flask, request, jsonify
 
-# Application for routing
+# Routing application
 application = Flask(__name__)
 
 """
