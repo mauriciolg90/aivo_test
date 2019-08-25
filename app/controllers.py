@@ -7,6 +7,19 @@ from flask import Flask, request, jsonify
 application = Flask(__name__)
 
 """
+    Returns a list of all countries with no filter
+    --------------------------------------
+    Parameters:
+        None so far
+"""
+@application.route('/countries/all', methods=['GET'])
+def countries_all():
+    session = Session()
+    # Query on the database getting all the results
+    countries = session.query(Indicators.location, Indicators.country).all()
+    return jsonify(countries)
+
+"""
     Returns a list of countries filtering by:
         INDICATOR: SW_LIFS (Life satisfaction)
         INEQUALITY: TOT (Total)
@@ -25,7 +38,6 @@ def countries_sw_lifs_gt(index):
             Indicators.inequality_code == 'TOT',
             Indicators.value > index
         ).all()
-        # Return the results
         return jsonify(countries)
     else:
         message = {
