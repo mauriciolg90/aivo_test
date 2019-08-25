@@ -111,7 +111,7 @@ NOTE: by default, host and port are 'localhost' and '3306' respectively.
 Finally, we can start to use the virtual environment doing:
 
 ```
-# Activate the virtualenv created:
+# Activate the created virtualenv:
 $ source flask_env/bin/activate
 
 # Install flask and other dependencies:
@@ -133,14 +133,16 @@ $ python3 aivo_test/main.py
 Then, you can make queries using a client like Postman or Curl. The easiest way is to write the URL on any browser:
 
 ```
-# Replace the 'index' parameter with a value greater than 0:
+# Replace the 'index' parameter with a float value greater than 0:
 http://localhost:5000/countries/sw_lifs_gt/<float:index>
 
 # For example:
 http://localhost:5000/countries/sw_lifs_gt/5.0
 ```
 
-The application returns a JSON containing the found results. If you want to build another queries, you should only add new endpoints and handlers on the controllers module.
+The application will return a JSON containing the countries with their index value greater than the input value, using only life satisfaction index and total inequality.
+
+If you want to build another queries, you should only add new endpoints and handlers on the controllers module.
 
 ## Running unit tests
 
@@ -152,7 +154,7 @@ $ python3 -m pytest -s aivo_test/test/unit/test_countries.py
 
 # Run MARKED testcases (i.e. testcases with labels):
 $ python3 -m pytest -s aivo_test/test/unit/test_countries.py -m status_code
-$ python3 -m pytest -s aivo_test/test/unit/test_countries.py -m countries_len
+$ python3 -m pytest -s aivo_test/test/unit/test_countries.py -m countries_sw_lifs
 
 # Run SPECIFIC testcase:
 $ python3 -m pytest -s aivo_test/test/unit/test_countries.py::test_not_found_request
