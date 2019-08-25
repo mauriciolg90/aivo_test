@@ -41,7 +41,7 @@ def test_countries_bad_request(request):
     assert_that(resp.ok).is_false()
     assert_that(resp.status_code).is_equal_to(400) # Bad Request
 
-@pytest.mark.countries_len
+@pytest.mark.countries_sw_lifs
 def test_countries_all(request):
     # Specific index
     index = 0.1
@@ -54,7 +54,7 @@ def test_countries_all(request):
     assert_that(resp.status_code).is_equal_to(200) # OK
     assert_that(len(resp.json())).is_equal_to(39) # All results
 
-@pytest.mark.countries_len
+@pytest.mark.countries_sw_lifs
 def test_countries_none(request):
     # Specific index
     index = 7.5
