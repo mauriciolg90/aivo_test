@@ -7,6 +7,8 @@ This web application is used to filter countries according to indexs provided by
 app/  
 |-> controllers.py  
 |-> models.py  
+templates/  
+|-> index.html  
 test/  
 |-> unit/  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-> pytest.ini  
