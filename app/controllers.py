@@ -1,10 +1,15 @@
 # For queries and response
 from db_setup import Session
 from app.models import Indicators
+from flask import render_template
 from flask import Flask, request, jsonify
 
 # Routing application
-application = Flask(__name__)
+application = Flask(__name__, template_folder='../templates')
+
+@application.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 """
     Returns a list of all countries with no filter
